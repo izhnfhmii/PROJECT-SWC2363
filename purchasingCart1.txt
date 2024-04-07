@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Foodkies Food Court List</title>
+
+<style> 
+.header {
+    background-color: #C0C0C0;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 20px;
+}
+
+.nav-links li:last-child {
+    margin-right: 0;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: #ff7a59;
+}
+
+/*For Align The Row Of Pictures*/
+* {
+    box-sizing: border-box;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* CSS to style the button */
+.darkred-button {
+    background-color: darkred;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Hover effect */
+.darkred-button:hover {
+    background-color: darkred;
+}
+
+.button1 {width: 200px;}
+</style>
+
+</head>
+
+<body>
+
+<header class="header">   
+    <p> <a href="Foodkies%20Customer%20Homepages.php"><img src="Foodkies.png" width="100" height="33"></a></p>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="">Login / Sign Up<class="menu-link"></a></li>
+            <li><a href="http://localhost/foodkiesfriendlies/Foodkies%20Customer%20Food%20Court%20List.php">Food Court List<class="menu-link"></a></li>
+            <li><a href="http://localhost/foodkiesfriendlies/Foodkies%20Customer%20Purchasing%20Cart.php">Purchasing Cart<class="menu-link"></a></li>
+            <li><a href="http://localhost/foodkiesfriendlies/Foodkies%20Customer%20Contact.php">Contact<class="menu-link"></a></li>
+            <li><a href="http://localhost/foodkiesfriendlies/Foodkies%20Customer%20About%20Us.php">About<class="menu-link"></a></li>
+        </ul>
+    </nav>
+</header>
+
+<style>
+body {
+    background-image: url('FoodkiesBackground.jpg');
+}
+</style>
+
+<div class="row">
+<?php
+// Replace these variables with your actual MySQL server details
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$database = "your_database_name"; // Replace with your actual database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// SQL query to retrieve food items from the database
+$sql = "SELECT * FROM food";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while ($row = $result->fetch_assoc()) {
+        // Generate HTML content for each food item
+        echo '<div class="column">';
+        echo '<p align="center"><img src="' . $row["foodImage"] . '" width="285" height="214"></p>';
+        echo '<p align="center">' . $row["foodName"] . '</p>';
+        echo '<a href="http://localhost/foodkiesfriendlies/Food%20Court%20List/' . $row["foodName"] . '.php">';
+        echo '<p align="center"> <button class="darkred-button button1">Place The Order</button> </p>';
+        echo '</a>';
+        echo '</div>';
+    }
+} else {
+    echo "0 results";
+}
+$conn->close();
+?>
+</div>
+
+<footer>
+    <p align="left"> © FOODKIES 2024. ALL RIGHTS RESERVED </p>
+</footer>  
+
+</body>
+</html>
